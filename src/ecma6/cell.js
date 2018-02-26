@@ -22,6 +22,6 @@ export class Cell {
 
 	get_blocked_directions(){
 		let res=this.exits^(up|right|down|left);
-		return res^this.limits;
+		return res|this.limits;
 	}
 }

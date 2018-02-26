@@ -1,7 +1,19 @@
+import {Cell} from './cell.js';
+import {Coords} from './coords.js';
+import {Generator_type_a} from './generator_type_a.js';
+import {Maze} from './maze.js';
+import {Display} from './display.js';
+import {Input} from './input.js';
+
+document.querySelector("h1").innerHTML="Using the ECMA6 mode";
+
+let i=new Input();
+
 let m=null;
 let c=new Coords(0,0);
 let g=null;
 let d=new Display();
+i.register(d);
 
 document.getElementById('create_grid').onclick=function() {
 	console.log("Creating grid...");
