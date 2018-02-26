@@ -3,17 +3,18 @@ js-maze
 
 A small maze generator in JS. 
 
-#About:
+# About:
 
 A small maze generator written in Javascript with a recursive algorithm (depth-first search, I think) that usually generates a large correct path with a few smaller dead-ends.
 
-#Rationale:
+# Rationale:
 
 I just wanted to test class syntax, imports and exports.
 
-#TODO
+# TODO
 
 	- Modify the generator a bit, so stretches aren't as long.
+Do modifications in a new class!!!!
 		- Perhaps a counter of successful steps.
 			- Store the tip, just in case.
 			- backtrack when you reach X for at least positions.
