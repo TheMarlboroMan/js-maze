@@ -9,9 +9,16 @@ A small maze generator written in Javascript with a recursive algorithm (depth-f
 
 #Rationale:
 
-I just wanted to test class syntax, imports and exports without a transpiler. In any case, there are two code branches present: one for EC6 (imports, exports) and one for declaring everything in a single file.
+I just wanted to test class syntax, imports and exports.
 
 #TODO
 
-	- Display with a canvas.
-	- Add the ability to "play" the maze.
+	- Modify the generator a bit, so stretches aren't as long.
+		- Perhaps a counter of successful steps, backtrack when you reach X for at least positions.
+		- Store the tip, just in case.
+		- Once the stack is empty, we should have a count of "visited" of w*h.
+		- If not, take the tip and go again... Repeat for all tips.
+	- Fix the non ES6 part... or better, transpile and such.
+	- Add bonuses around.
+	- Add scrolling on very large mazes.
+	- Center on smaller mazes.
