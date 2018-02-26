@@ -23,4 +23,5 @@ I just wanted to test class syntax, imports and exports.
 	- Add scrolling on very large mazes.
 	- Center on smaller mazes.
 	- Add a better presentation, just in case.
+	- Add step marker, for the step thing.
 	- Fix TODO.
