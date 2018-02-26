@@ -14,10 +14,16 @@ I just wanted to test class syntax, imports and exports.
 #TODO
 
 	- Modify the generator a bit, so stretches aren't as long.
-		- Perhaps a counter of successful steps, backtrack when you reach X for at least positions.
-		- Store the tip, just in case.
-		- Once the stack is empty, we should have a count of "visited" of w*h.
-		- If not, take the tip and go again... Repeat for all tips.
+		- Perhaps a counter of successful steps.
+			- Store the tip, just in case.
+			- backtrack when you reach X for at least positions.
+			- backtrack for X / n steps.
+			- Continue with the algorithm.
+		- When the stack is empty:
+			- We should have a count of "visited" of w*h.
+			- If not, for each tip:
+				- Make the tip the current head.
+				- Have a go at the algorithm with it.
 	- Fix the non ES6 part... or better, transpile and such.
 	- Add bonuses around.
 	- Add scrolling on very large mazes.
