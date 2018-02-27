@@ -1,0 +1,29 @@
+{
+  "name": "js-maze",
+  "version": "1.0.0",
+  "scripts": {
+      "build": "babel src -d lib"
+  },
+  "description": "A little maze generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheMarlboroMan/js-maze.git"
+  },
+  "keywords": [
+    "Meh"
+  ],
+  "author": "The Marlboro Man",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/TheMarlboroMan/js-maze/issues"
+  },
+  "homepage": "https://github.com/TheMarlboroMan/js-maze#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  }
+}
