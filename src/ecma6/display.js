@@ -26,6 +26,7 @@ export class Display {
 
 		//TODO: No refresh, nothing is seen. 
 		//TODO: No maze, no refresh.
+		//TODO: Refresh loop should be registered, and shit.
 	}
 
 	refresh(_maze) {
