@@ -71,6 +71,7 @@ export class Generator_type_a {
 	choose_random_direction(_coords, _maze) {
 		let directions=dir_to_array(_maze.get_cell(_coords).get_blocked_directions());
 		while(directions.length){
+			//TODO Isn't math random generating a floating point number???
 			let res=directions.splice(Math.random() * directions.length, 1)[0];
 			if(!this.check_free_direction(_coords, _maze, res)) continue;
 			return res;

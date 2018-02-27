@@ -61,6 +61,11 @@ export class Display {
 		this.grid_circle(_player.position.x, _player.position.y);
 	}
 
+	draw_bonus(_bonus) {
+		this.setup_draw('#00f', '#00f');
+		this.grid_circle(_bonus.position.x, _bonus.position.y);
+	}
+
 	//TODO: These might go in a separate thing
 	//TODO: Healthy defaults?
 	setup_draw(_stroke, _fill) {

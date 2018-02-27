@@ -18,6 +18,15 @@ export class Coords{
 		}
 	}
 
+	move_to(_x, _y) {
+		this.x=_x;
+		this.y=_y;
+	}
+
+	is_equal_to(_coords) {
+		return this.x===_coords.x && this.y===_coords.y;
+	}
+
 	get_neighbour(_dir) {
 		let res=new Coords(this.x, this.y);
 		res.move(_dir);

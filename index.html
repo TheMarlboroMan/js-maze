@@ -3,17 +3,19 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style type="text/css">
+html {font-size: 10px; font-family: sans-serif;}
 #display {border: 1px solid red;}
+input, select {font-size: 0.8em; border: 1px solid #ccc;}
+input[type="text"] {width: 3em; height: 0.8em;}
 .hidden {display: none;}
 </style>
+<title>Fun with mazes (Enable dom.moduleScripts.enabled in about:config for ECMA6 stuff</title>
 </head>
 <body>
-	<h1>Fun with mazes</h1>
-	<b>Enable dom.moduleScripts.enabled in about:config to use the ECMA6 stuff</b>
 	<div>
-		<h2>Maze size</h2>
-		w:<input type="text" id="input_w" value="20" />
-		h:<input type="text" id="input_h" value="20" />
+		<h2>Maze properties</h2>
+		size: w <input type="text" id="input_w" value="20" /> x h<input type="text" id="input_h" value="20" />
+		bonuses: <input type="text" id="input_bonus" value="3" />
 	</div>
 	<div>
 		<h2>Generator</h2>

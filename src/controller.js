@@ -14,12 +14,19 @@ class Player {
 	}
 }
 
+class Bonus {
+	constructor(_x, _y) {
+		this.position=new Coords(_x,_y);
+	}
+}
+
 export class Controller {
 
 	constructor() {
 		this.input=new Input();
 		this.display=new Display();
 		this.player=new Player();
+		this.bonus=Array();
 		this.generator=null;
 		this.maze=null;
 
@@ -32,17 +39,37 @@ export class Controller {
 		let coords=Coords.from_coords(this.player.position);
 		let dir=none;
 
+		//TODO: Enable view panning too.
+
 		switch(code) {
 			case 37: dir=left; break; //Left
 			case 38: dir=up; break; //Up
 			case 39: dir=right; break; ///Right
 			case 40: dir=down; break; //Down
 		}
+
+		//TODO: Center the view????
 	
 		if(none!==dir) {
 			if(! (dir & this.maze.get_cell(coords).get_blocked_directions())) {
 				coords.move(dir);
 				this.player.position=coords;
+
+				let total_bonus=this.bonus.length;
+
+				if(total_bonus) {
+					this.bonus=this.bonus.filter( (item) => {
+						return !item.position.is_equal_to(this.player.position);
+					});
+
+					if(this.bonus.length !== total_bonus) {
+						console.log("caught ", total_bonus-this.bonus.length);
+						if(!this.bonus.length) {
+							alert("Well done!!!");
+						}
+					}
+					
+				}
 			}
 		}
 	}
@@ -62,7 +89,34 @@ export class Controller {
 	}
 
 	generate_maze() {
-		this.build_generator().begin(this.maze);
+		let g=this.build_generator();
+		g.begin(this.maze);
+		this.player.position=Coords.from_coords(g.initial_cell);
+		this.generate_bonuses();
+	}
+
+	generate_bonuses() {
+		let get_coord=function(min, max) {
+			return Math.floor(Math.random() * (max - min)) + min;
+		};
+
+		//This could actually end in an infinite loop if there are more bonuses than w x h.
+		for(let i=0; i < parseInt(document.getElementById('input_bonus').value, 10);) {
+			let 	x=get_coord(0, this.maze.width), 
+				y=get_coord(0, this.maze.height),
+				repeated=false;
+
+			this.bonus.forEach( (item) => {
+				if(item.position.x == x && item.position.y == y) {
+					repeated=true;
+				}
+			})
+
+			if(!repeated) {
+				i++;
+				this.bonus.push(new Bonus(x, y));
+			}
+		}
 	}
 
 	step() {
@@ -74,14 +128,26 @@ export class Controller {
 
 	draw() {
 		this.display.clear();
-		if(null!==this.maze) this.display.draw_maze(this.maze);
-		if(null!==this.player) this.display.draw_player(this.player);
-		if(null!==this.generator && null!==this.generator.get_step_coords()) this.display.draw_generator_head(this.generator.get_step_coords());
+		if(null!==this.maze) {
+			this.display.draw_maze(this.maze);
+		}
+
+		if(null!==this.player) {
+			this.display.draw_player(this.player);
+		}
+
+		if(this.bonus.length) {
+			this.bonus.forEach( (item) => {this.display.draw_bonus(item);});
+		}
+
+		if(null!==this.generator && null!==this.generator.get_step_coords()) {
+			this.display.draw_generator_head(this.generator.get_step_coords());
+		}
+
 		requestAnimationFrame( () => {this.draw();}); 
 	}
 
 	build_generator() {
-
 		let get_value=function(_container, _name) {
 			let item=_container.querySelector('input[name="'+_name+'"]');
 			if(null===item) {
@@ -109,7 +175,6 @@ export class Controller {
 			break;
 			}
 		}
-			
 	}
 
 }
