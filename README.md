@@ -11,6 +11,15 @@ A small maze generator written in Javascript with a recursive algorithm (depth-f
 
 I just wanted to test class syntax, imports and exports.
 
+# Building.
+
+- If your browser support ES6 style imports and exports:
+	- Do nothing. Use index.html and be happy.
+- Else:
+	- Solve the package.json dependencies with npm. 
+	- Do "npm run build".
+	- Use index.html
+
 # TODO
 
 	- Modify the generator a bit, so stretches aren't as long.
