@@ -1,11 +1,13 @@
+"use strict";
+
 import {none, up, right, down, left, opposite_direction, dir_to_array} from './tools.js';
 import {Cell} from './cell.js';
 
 export class Maze {
 
 	constructor(_w, _h) {
-		this.width=_w;
-		this.height=_h;
+		this.width=parseInt(_w, 10);
+		this.height=parseInt(_h, 10);
 		this.grid=Array();
 
 		this.initialize_grid();

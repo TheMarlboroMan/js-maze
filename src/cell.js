@@ -1,3 +1,5 @@
+"use strict";
+
 import {none, up, right, down, left, opposite_direction, dir_to_array} from './tools.js';
 
 export class Cell { 

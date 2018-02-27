@@ -3,19 +3,21 @@
 import {Coords} from './coords.js';
 import {none, up, right, down, left, opposite_direction, dir_to_array} from './tools.js';
 
-export class Generator_type_a {
-	constructor(_coords) {
+export class Generator_type_b {
+	constructor(_coords, _max_run, _min_back) {
 		this.stack=[];
+		this.tips=[];
 		this.visited=new Set();
 		this.initial_cell=Coords.from_coords(_coords);
+		this.max_run=_max_run;
+		this.min_backtrack=_min_back;
+		this.cur_run=0;
+		this.cur_backtrack=0;
 		this.step_coords=null;
+		this.pass=0;
 	}
 
 	begin(_maze) {
-
-		//TODO: Can we just have this function call the other???.
-		//TODO: The two functions have SLIGHTLY different shapes...
-
 		//Choose first cell...
 		let coords=Coords.from_coords(this.initial_cell);
 		let direction=none;
@@ -23,20 +25,51 @@ export class Generator_type_a {
 		this.stack.push(Coords.from_coords(coords));
 		this.visited.add(this.calculate_coords_hash(coords, _maze));
 
-		do{
-			direction=this.choose_random_direction(coords, _maze);
-			if(none===direction) {
-				coords=Coords.from_coords(this.stack.pop());
+		while(true){
+			do{
+				//TODO: Subsequent pass will ignore the run thing.
+				direction=this.choose_random_direction(coords, _maze);
+				if(none===direction || this.cur_run >= this.max_run) {
+
+					if(this.cur_run >= this.max_run) {
+						this.tips.push(Coords.from_coords(coords));
+						while(this.stack.length && this.cur_backtrack <= this.min_backtrack) {
+							coords=Coords.from_coords(this.stack.pop());
+							++this.cur_backtrack;
+						}
+					}
+					else if(this.stack.length) {
+						coords=Coords.from_coords(this.stack.pop());
+					}
+
+					this.cur_run=0;
+					this.cur_backtrack=0;
+				}
+				else { 
+					++this.cur_run;
+					_maze.carve_exit(coords, direction);
+					coords.move(direction);
+					this.stack.push(Coords.from_coords(coords));
+					this.visited.add(this.calculate_coords_hash(coords, _maze));
+				}
+			}while(this.stack.length);
+
+			//TODO: Perhaps the second runs have no min shit: just take each tip and backtrack!.
+			++this.pass;
+			this.min_backtrack=0;
+			
+			if(!this.tips.length) {
+				break;
 			}
-			else { 
-				_maze.carve_exit(coords, direction);
-				coords.move(direction);
-				this.stack.push(Coords.from_coords(coords));
-				this.visited.add(this.calculate_coords_hash(coords, _maze));
+			else {
+				coords=Coords.from_coords(this.tips.shift());
 			}
-		}while(this.stack.length);
+		};
+
+		//TODO: EVEN NOW WE MIGHT HAVE MISSING CELLS!!!!!. We should just connect them to the nearest and be done, damn it.
 	}
 
+	//TODO...
 	step(_maze) {
 		if(null===this.step_coords) {
 			console.log("Generating new step coords...");

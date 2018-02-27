@@ -1,3 +1,5 @@
+"use strict";
+
 export const none=0;
 export const up=1;
 export const right=2;

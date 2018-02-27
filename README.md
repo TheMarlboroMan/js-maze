@@ -20,6 +20,12 @@ I just wanted to test class syntax, imports and exports.
 	- Do "npm run build".
 	- Use index.html
 
+# Adding generators.
+
+The interface of a generator is begin(_maze):void, step(_maze):void and get_step_coords():Coords.
+
+Generators are created in the "build_generator" method, in "controller.js". Check the examples provided.
+
 # TODO
 
 	- Modify the generator a bit, so stretches aren't as long.
@@ -34,7 +40,6 @@ Do modifications in a new class!!!!
 			- If not, for each tip:
 				- Make the tip the current head.
 				- Have a go at the algorithm with it.
-	- Fix the non ES6 part... or better, transpile and such.
 	- Add bonuses around.
 	- Add scrolling on very large mazes.
 	- Center on smaller mazes.

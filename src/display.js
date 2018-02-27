@@ -1,3 +1,5 @@
+"use strict";
+
 import {Maze} from './maze.js';
 import {Cell} from './cell.js';
 import {Coords} from './coords.js';
@@ -20,33 +22,38 @@ export class Display {
 	}
 
 	draw_maze(_maze) {
+		let draw_cell=(_cell, _coords)=>{
+			let blocked=_cell.get_blocked_directions();
+
+			if(blocked & up) {
+				this.grid_line(_coords.x, _coords.y, _coords.x+1, _coords.y);
+			}
+			if(blocked & right) {
+				this.grid_line( _coords.x+1, _coords.y, _coords.x+1, _coords.y+1);
+			}
+			if(blocked & down) {
+				this.grid_line( _coords.x, _coords.y+1, _coords.x+1, _coords.y+1);
+			}
+			if(blocked & left) {
+				this.grid_line( _coords.x, _coords.y, _coords.x, _coords.y+1);
+			}
+		};
+
 		this.setup_draw('#000', 'none');
 		let coords=new Coords(0,0);
 		for(let x=0; x<_maze.width; x++) {
 			for(let y=0; y<_maze.height; y++) {
 				coords.x=x;
 				coords.y=y;
-				this.draw_cell(_maze.get_cell(coords), coords);
+				draw_cell(_maze.get_cell(coords), coords);
 			}
 		}
 	}
+	
 
-	draw_cell(_cell, _coords) {
-
-		let blocked=_cell.get_blocked_directions();
-
-		if(blocked & up) {
-			this.grid_line(_coords.x, _coords.y, _coords.x+1, _coords.y);
-		}
-		if(blocked & right) {
-			this.grid_line( _coords.x+1, _coords.y, _coords.x+1, _coords.y+1);
-		}
-		if(blocked & down) {
-			this.grid_line( _coords.x, _coords.y+1, _coords.x+1, _coords.y+1);
-		}
-		if(blocked & left) {
-			this.grid_line( _coords.x, _coords.y, _coords.x, _coords.y+1);
-		}
+	draw_generator_head(_coords) {
+		this.setup_draw('#0f0', '#0f0');
+		this.grid_circle(_coords.x, _coords.y);
 	}
 
 	draw_player(_player) {
@@ -71,9 +78,6 @@ export class Display {
 	grid_circle(_cx, _cy) {
 		let half_unit=unit/2;
 		let radius=unit/4;
-
-		
-
 		this.context.beginPath();
 		this.context.arc( (_cx*unit)+half_unit, (_cy*unit)+half_unit, radius, 0,  2 * Math.PI, false);
 		this.context.stroke();

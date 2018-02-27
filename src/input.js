@@ -1,3 +1,5 @@
+"use strict";
+
 export class Input {
 	constructor() {
 		this.listeners=new Array();

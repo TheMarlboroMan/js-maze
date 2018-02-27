@@ -1,3 +1,5 @@
+"use strict";
+
 import {none, up, right, down, left, opposite_direction, dir_to_array} from './tools.js';
 
 export class Coords{
@@ -20,5 +22,9 @@ export class Coords{
 		let res=new Coords(this.x, this.y);
 		res.move(_dir);
 		return res;
+	}
+
+	static from_coords(_coords) {
+		return new Coords(_coords.x, _coords.y);
 	}
 }

@@ -4,19 +4,48 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style type="text/css">
 #display {border: 1px solid red;}
+.hidden {display: none;}
 </style>
 </head>
 <body>
+	<h1>Fun with mazes</h1>
 	<b>Enable dom.moduleScripts.enabled in about:config to use the ECMA6 stuff</b>
 	<div>
+		<h2>Maze size</h2>
 		w:<input type="text" id="input_w" value="20" />
 		h:<input type="text" id="input_h" value="20" />
+	</div>
+	<div>
+		<h2>Generator</h2>
+		<select id="generator" onchange="update_generator_data(this)">
+			<option selected value="type_a">depth-first search</option>
+			<option value="type_b">depth-first search (shorter runs)</option>
+		</select>
+
+		<div name="type_a" class="">
+			start at x:<input type="text" name="x" value="0" /> y:<input type="text" name="y" value="0" />
+		</div>
+		<div name="type_b" class="hidden">
+			start at x:<input type="text" name="x" value="0" /> y:<input type="text" name="y" value="0" />
+			max run: <input type="text" name="max_run" value="10" />
+			min backtrack: <input type="text" name="min_backtrack" value="4" />
+		</div>
+
+	</div>
+	<div>
+		<h3>Control</h3>
 		<input type="button" id="new_grid" value="New grid" />
 		<input type="button" id="generate_maze" value="Generate" />
 		<input type="button" id="step" value="Step" />
 	</div>
 	<canvas id="display"></canvas>
 </body>
+<script type="text/javascript">
+function update_generator_data(select) {
+	select.parentNode.querySelectorAll('div').forEach( (item) => {item.classList.add('hidden');}); 
+	select.parentNode.querySelector('[name="'+select.value+'"]').classList.remove('hidden');
+}
+</script>
 <script type="module" type="text/javascript" src="src/main.js"></script>
 <script nomodule src="build/main.js"></script>
 </html>	
