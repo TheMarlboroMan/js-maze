@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup src/main.js --o build/main-rollup.js -f cjs; babel build/main-rollup.js -d build"
+    "build": "rollup src/main.js --o build/main-rollup.js -f cjs; babel build/main-rollup.js --out-file build/main.js"
   },
   "babel": {
     "presets": [
