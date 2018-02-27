@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib"
+    "build": "babel src/js-maze -d lib; rollup lib/main.js --o src/js-maze/main.js -f cjs"
   },
   "babel": {
     "presets": [
