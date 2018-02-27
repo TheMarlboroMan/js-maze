@@ -6,7 +6,6 @@ import {up, right, down, left} from './tools.js';
 const unit=10;
 
 export class Display {
-
 	constructor() {
 		this.display=document.getElementById('display');
 		this.display.width=300;
@@ -16,22 +15,12 @@ export class Display {
 		this.position={x: 0, y:0};
 	}
 
-	handle_keydown(code) {
-		switch(code) {
-			case 37: --this.position.x; break; //Left
-			case 38: --this.position.y; break; //Up
-			case 39: ++this.position.x; break; ///Right
-			case 40: ++this.position.y; break; //Down
-		}
-
-		//TODO: No refresh, nothing is seen. 
-		//TODO: No maze, no refresh.
-		//TODO: Refresh loop should be registered, and shit.
+	clear() {
+		this.context.clearRect(0, 0, this.display.width, this.display.height);
 	}
 
-	refresh(_maze) {
-		this.context.clearRect(0, 0, this.display.width, this.display.height);
-		this.context.strokeStyle='#000';
+	draw_maze(_maze) {
+		this.setup_draw('#000', 'none');
 		let coords=new Coords(0,0);
 		for(let x=0; x<_maze.width; x++) {
 			for(let y=0; y<_maze.height; y++) {
@@ -40,8 +29,6 @@ export class Display {
 				this.draw_cell(_maze.get_cell(coords), coords);
 			}
 		}
-
-		console.log("Refresh done");
 	}
 
 	draw_cell(_cell, _coords) {
@@ -62,10 +49,33 @@ export class Display {
 		}
 	}
 
-	grid_line(p1x, p1y, p2x, p2y) {
+	draw_player(_player) {
+		this.setup_draw('#f00', '#f00');
+		this.grid_circle(_player.position.x, _player.position.y);
+	}
+
+	//TODO: These might go in a separate thing
+	//TODO: Healthy defaults?
+	setup_draw(_stroke, _fill) {
+		if(undefined!==_stroke) this.context.strokeStyle=_stroke;
+		if(undefined!==_fill) this.context.fillStyle=_fill;
+	}
+
+	grid_line(_p1x, _p1y, _p2x, _p2y) {
 		this.context.beginPath();
-		this.context.moveTo( (p1x+this.position.x) * unit, (p1y+this.position.y) * unit);
-		this.context.lineTo( (p2x+this.position.x) * unit, (p2y+this.position.y) * unit);
+		this.context.moveTo( (_p1x+this.position.x) * unit, (_p1y+this.position.y) * unit);
+		this.context.lineTo( (_p2x+this.position.x) * unit, (_p2y+this.position.y) * unit);
+		this.context.stroke();
+	}
+
+	grid_circle(_cx, _cy) {
+		let half_unit=unit/2;
+		let radius=unit/4;
+
+		
+
+		this.context.beginPath();
+		this.context.arc( (_cx*unit)+half_unit, (_cy*unit)+half_unit, radius, 0,  2 * Math.PI, false);
 		this.context.stroke();
 	}
 }
